@@ -6,6 +6,7 @@ const config = require("./config/keys");
 
 //require("dotenv").config();
 const mongoose = require("mongoose");
+
 mongoose.connect(config.mongoURI ,
   {
     useNewUrlParser: true, useUnifiedTopology: true,
@@ -24,7 +25,7 @@ app.listen(port, () => {
 
 app.use(cors());
 app.use(express.json());
-
+app.use("/uploads", express.static("./uploads"));
 app.use('/users',require('./routes/users'));
 
 app.use('/product',require('./routes/product'));
