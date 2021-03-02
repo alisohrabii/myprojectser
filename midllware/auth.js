@@ -21,11 +21,10 @@ const auth=async(req,res,next)=>{
                     
                             if (user){
                                  
-                    console.log(user);
-                    console.log("pppp");
+                 
                                 req.user=user;
                             
-                               console.log(`req.username${req.username}`);
+                               
                                   next(); 
                             }else{
                                 

@@ -10,8 +10,8 @@ const router = express.Router();
 //rigister
 router.post("/register",async(req, res) => {
   try{
-    console.log(req.data)
- const {name,lastname,email,password}=req.body;
+    
+ const {name,mobnumber,lastname,email,password}=req.body;
 const user= await User.findOne({email:email});
 if (user!=null){
   res.status(400).json({mss:"این کاربر از قبل ثبت نام کرده است"});
@@ -23,8 +23,8 @@ const hashedpass=await bcrypt.hash(password,salt);
     name:name,
     email:email,
     password:hashedpass,
-    lastname:lastname
-    
+    lastname:lastname,
+    mobnumber:mobnumber
     });
     newuser.save().then((result)=>{
       res.status(200).json({mss:"info saved in database"});
@@ -64,7 +64,7 @@ const user= await User.findOne({email:email});
                              console.log(token); 
                              User.findOneAndUpdate({email:email},{token:token}).then(result=>{
                                  console.log(result)
-                                 res.status(200).json({token,user:{username:user.name,lastname:user.lastname}});
+                                 res.status(200).json({token,user:{username:user.name,lastname:user.lastname,mobnumber:user.mobnumber}});
                                  }).catch(err=>console.log(err));
                    // res.status(200).json({token,user:{username:user.name,lastname:user.lastname}});
                     }else{
@@ -85,11 +85,25 @@ const user= await User.findOne({email:email});
 
 });
 router.post('/tokenlogin',auth,(req,res)=>{
-  console.log(req.header("xtoken"));
-console.log("inside route test");
-console.log(req.username);
-res.status(200).json({username:req.user.name,lastname:req.user.lastname,email:req.user.email});
+  
+res.status(200).json({username:req.user.name,lastname:req.user.lastname,email:req.user.email,mobnumber:req.user.mobnumber});
 
 })
+//set cart in user
 
+router.post("/setcart",async(req, res) => {
+  try{
+  const {userinfo,cart}=req.body;
+  console.log(userinfo);
+  User.findOneAndUpdate({email:userinfo.user.email},{cart:cart}).then(result=>{
+    console.log(result)
+    res.status(200).json({mss:"succes"});
+    }).catch(err=>console.log(err));
+  
+  }catch(err){
+      res.status(500).json({mss:"خطا در سرور"});
+    }
+  
+  
+})
 module.exports = router;

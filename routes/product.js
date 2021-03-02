@@ -1,6 +1,8 @@
 const express = require('express');
 const config = require("../config/keys");
 const Product=require('../model/product');
+
+
 const { Router } = require('express');
 const multer=require('multer');
 const router = express.Router();
@@ -64,6 +66,7 @@ router.post("/Getproductbyname",async(req, res) => {
     
     
 })
+//set cart
 
 //save product images
 

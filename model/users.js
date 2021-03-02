@@ -6,6 +6,9 @@ const userSchema = mongoose.Schema({
         type:String,
         maxlength:50
     },
+    mobnumber:{
+        type:String
+    },
     email: {
         type:String
     },
@@ -19,6 +22,10 @@ const userSchema = mongoose.Schema({
     },
     token:{
         type:String
+    },
+    cart:{
+type:Array
+
     }
 },{timestamps:true})
 
